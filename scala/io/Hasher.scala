@@ -6,11 +6,7 @@ import java.security.MessageDigest
 /**
   * Hashing Object Trait
   * supports the generally algorithm like md5 and sha-1
-  * 0.0.2 to 0.0.3
-  * - update scala code style
   *
-  * @see Hasher#getFileHash for File
-  * @see Hasher#getStringHash for String
   * @author SourceCodeBot <dev@nils-heinemann.de> 11.08.2015.
   */
 trait Hasher {
@@ -20,7 +16,7 @@ trait Hasher {
   /**
     * hashing the the content from inputstream to one selected hashing method.
     *
-    * hash support [[supportedAlgorithmList]]
+    * hash support supportedAlgorithmList
     *
     * @param stream    InputStream
     * @param algorithm Option one of the supported hashing algorithm

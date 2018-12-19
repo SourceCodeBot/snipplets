@@ -9,6 +9,11 @@ import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 
+/**
+  * utility methods.
+  *
+  * @author SourceCodeBot <dev@nils-heinemann.de> 15.12.2018.
+  */
 object StreamUtil {
 
   /**

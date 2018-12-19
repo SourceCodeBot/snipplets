@@ -1,0 +1,83 @@
+package ${PACKAGE_NAME}
+
+// import ${Ctx}
+
+import util.sangria.SchemaProvider
+import sangria.macros.derive._
+import sangria.schema._
+import sangria.execution.deferred._
+import spray.json.RootJsonFormat
+
+trait ${NAME} extends SchemaProvider[${Ctx}] {
+
+  /*----------------------------------------------------
+   *  Types
+   *---------------------------------------------------*/
+
+  implicit lazy val ${TransferObject}Type: ObjectType[${CTX},${TransferObject}] = deriveObjectType[Unit, ${TransferObject}]()
+
+
+  lazy val ${TransferObject}CreateInputType: InputObjectType[${TransferObject}Create] = deriveInputObjectType[${TransferObject}Create]()
+
+
+  /*----------------------------------------------------
+   *  Mappers & Formatters
+   *---------------------------------------------------*/
+
+  import sangria.marshalling.sprayJson._
+  import spray.json.DefaultJsonProtocol._
+
+  implicit val mutationTypeFormat: RootJsonFormat[${TransferObject}Create] = jsonFormat1(${TransferObject}Create)
+
+
+  /*----------------------------------------------------
+   *  Fetchers
+   *---------------------------------------------------*/
+
+  val ${TransferObject}Fetcher = Fetcher(
+    (ctx: ${CTX}, ids: Seq[${TransferObject_ID}]) => /* find dummies by ids */
+  )
+
+  /*----------------------------------------------------
+   *  Arguments
+   *---------------------------------------------------*/
+
+  val ${TransferObject}IdArg = Argument("id", ${TransferObject_ID}Type)
+
+  /*----------------------------------------------------
+   *  Fields
+   *---------------------------------------------------*/
+
+  val queryFieldList: Seq[Field[${CTX},Unit]] = fields[${CTX},Unit](
+    Field("QUERY_FIELD_NAME",
+      ListType(${TransferObject}Type),
+      resolve = _ => {
+      /* add DAO access code here or fetcher */
+      ${TransferObject}fetcher.deferSeq()
+      },
+      tags = Nil
+    )
+  )
+
+  val mutationFieldList: Seq[Field[${CTX},Unit]] = fields[${CTX},Unit](
+    Field("MUTATION_FIELD_NAME",
+      OptionType(${TransferObject}Type),
+      arguments = Nil,
+      resolve = c => { /* add DAO access code here or fetcher */}
+    )//...
+  )
+
+
+
+  /*----------------------------------------------------
+   *  Overrides
+   *---------------------------------------------------*/
+
+
+  override def getFetchers(): Seq[Fetcher[${CTX}, _, _, _]] = super.getFetchers() ++ Seq()
+
+  override def getQueryFields(): Seq[Field[${CTX}, Unit]] = super.getQueryFields() ++ queryFieldList
+
+  override def getMutationFields(): Seq[Field[${CTX}, Unit]] = super.getMutationFields() ++ mutationFieldList
+
+}
