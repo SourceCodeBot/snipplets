@@ -12,22 +12,16 @@ import sangria.schema.Field
   * {{{
   * object GraphSchema  {
   *
+  *   // this private object provide all we need
   *   private object CustomSchema extends CustomSchemaSupport
   *
   *   val fetchers: Seq[Fetcher[Context, _, _, _]] = CustomSchema.getFetchers()
   *   val queryFields: Seq[Field[Context,Unit]] = CustomSchema.getQueryFields()
   *
-  *
-  *   /* -------------------------------------------------------------
-  *    * fetchers
-  *    * ------------------------------------------------------------- */
-  *
+  *   // fetchers&resolvers
   *   val Resolver = DeferredResolver.fetchers(fetchers :_*)
   *
-  *   /* -------------------------------------------------------
-  *    * query
-  *    * ------------------------------------------------------ */
-  *
+  *   // my queries
   *   val QueryType = ObjectType(
   *     "Query",
   *     fields[Context, Unit](
@@ -35,11 +29,9 @@ import sangria.schema.Field
   *     )
   *   )
   *
-  *   /* -------------------------------------------------------
-  *    * mutations
-  *    * ------------------------------------------------------ */
   *   // no Mutations in this case
   *
+  *   // definition
   *   val SchemaDefinition = Schema(QueryType)
   *
   * }
